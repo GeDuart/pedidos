@@ -1,5 +1,6 @@
-package br.com.projeto.servico.model;
+package br.com.pedidos.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,15 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
 
 import lombok.Data;
 
-
 @Entity
 @Data
-public class Cliente {
+public class Produto {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +24,8 @@ public class Cliente {
 	@Column(nullable = false)
 	private String nome;
 	
-	private String cep;
-	private String endereco;
-	
 	@Column(nullable = false)
-	private String email_principal;
+	private BigDecimal valor;
 	
 	@Column(nullable = false)
 	private Integer status;

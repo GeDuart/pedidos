@@ -1,4 +1,4 @@
-package br.com.projeto.servico.domain.service;
+package br.com.pedidos.domain.service;
 
 import java.util.Optional;
 
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import br.com.projeto.servico.domain.repository.ClienteRepository;
-import br.com.projeto.servico.model.Cliente;
+import br.com.pedidos.domain.repository.ClienteRepository;
+import br.com.pedidos.model.Cliente;
 
 @Service
 public class ClienteService {

@@ -1,6 +1,7 @@
-package br.com.projeto.servico.model;
+package br.com.pedidos.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,27 +11,32 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
+
 @Entity
 @Data
-public class PedidoItens {
-	
+public class Pedido {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "pedido_id", nullable = false)
-	private Pedido pedido;
+	@JoinColumn(name = "cliente_id", nullable = false)
+	private Cliente cliente;
 	
 	@Column(nullable = false)
-	private Double quantidade;
-	
-	@ManyToOne
-	@JoinColumn(name = "produto_id", nullable = false)
-	private Produto produto;
-	
+	private BigDecimal valor_total;
+
+	@JsonIgnore
 	@Column(nullable = false)
-	private BigDecimal valor_unitario; 
+	private Date data_criacao;
+	
+	
+	@JsonIgnore
+	@Column(nullable = false)
+	private Date data_att;
 	
 }

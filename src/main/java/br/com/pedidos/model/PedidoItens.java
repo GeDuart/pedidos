@@ -1,4 +1,6 @@
-package br.com.projeto.servico.model;
+package br.com.pedidos.model;
+
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,23 +11,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
-
 @Entity
 @Data
-public class Telefone {
-
+public class PedidoItens {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
-	private String numero;
+	@ManyToOne
+	@JoinColumn(name = "pedido_id", nullable = false)
+	private Pedido pedido;
 	
 	@Column(nullable = false)
-	private Integer tipo;
+	private Double quantidade;
 	
 	@ManyToOne
-	@JoinColumn(name = "cliente_id", nullable = false)
-	private Cliente cliente;
-
+	@JoinColumn(name = "produto_id", nullable = false)
+	private Produto produto;
+	
+	@Column(nullable = false)
+	private BigDecimal valor_unitario; 
+	
 }

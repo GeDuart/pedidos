@@ -1,4 +1,4 @@
-package br.com.projeto.servico.api.controller;
+package br.com.pedidos.api.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.projeto.servico.domain.repository.ClienteRepository;
-import br.com.projeto.servico.domain.service.ClienteService;
-import br.com.projeto.servico.model.Cliente;
+import br.com.pedidos.domain.repository.ClienteRepository;
+import br.com.pedidos.domain.service.ClienteService;
+import br.com.pedidos.model.Cliente;
 
 @RestController
 @RequestMapping("/clientes")

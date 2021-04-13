@@ -1,9 +1,9 @@
-package br.com.projeto.servico.domain.repository;
+package br.com.pedidos.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.projeto.servico.model.Pedido;
+import br.com.pedidos.model.Pedido;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long>  {

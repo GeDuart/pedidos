@@ -1,4 +1,4 @@
-package br.com.projeto.servico.domain.service;
+package br.com.pedidos.domain.service;
 
 import org.springframework.stereotype.Service;
 
