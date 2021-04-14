@@ -1,5 +1,6 @@
 package br.com.pedidos.domain.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +16,25 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
+	public List<Cliente> listarClientes(){
+		return clienteRepository.findAll();
+	}
+	
+	public Cliente buscarCliente(Long id) {
+		Optional<Cliente> clientes = clienteRepository.findById(id);
+		if (clientes.isPresent()) {
+			return clientes.get();			
+		}
+		throw new EmptyResultDataAccessException(1);
+	}
+	
 	public Cliente salvar(Cliente cliente) { 
 		return clienteRepository.save(cliente);
 	}
 	
 	public void remover(Long cozinhaId) {
-		Optional<Cliente> cliente = clienteRepository.findById(cozinhaId);
-		
-		if (cliente.get().getId() == null) {
-			throw new EmptyResultDataAccessException(1);
-		}
-			
-		clienteRepository.deleteById(cozinhaId);
+		Cliente cliente = buscarCliente(cozinhaId);
+		clienteRepository.deleteById(cliente.getId());
 	}
 
 }

@@ -1,9 +1,9 @@
 package br.com.pedidos.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,30 +16,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.pedidos.domain.repository.ClienteRepository;
 import br.com.pedidos.domain.service.ClienteService;
 import br.com.pedidos.model.Cliente;
 
 @RestController
 @RequestMapping("/clientes")
 public class ClientesController {
-	
-	@Autowired
-	private ClienteRepository clienteRepository;
-	
+
 	@Autowired
 	private ClienteService clienteService;
 	
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("")
 	public List<Cliente> listar() {
-		return clienteRepository.findAll();
+		return clienteService.listarClientes();
 	}
 	
 	@GetMapping("/{clienteId}")
-	public ResponseEntity<Optional<Cliente>> buscar(@PathVariable("clienteId") Long id) {
-		Optional<Cliente> clientes = clienteRepository.findById(id); 
-		return ResponseEntity.ok(clientes);
+	public ResponseEntity<Cliente> buscar(@PathVariable("clienteId") Long id) {
+		try {
+			Cliente cliente = clienteService.buscarCliente(id);
+			return ResponseEntity.ok(cliente);
+		}catch (EmptyResultDataAccessException e) {
+			// TODO: handle exception
+			return ResponseEntity.notFound().build();
+		}	
 	}
 	
 	@PostMapping
