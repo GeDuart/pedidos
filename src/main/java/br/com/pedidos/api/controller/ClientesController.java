@@ -2,7 +2,9 @@ package br.com.pedidos.api.controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.pedidos.domain.exception.EntidadeEmUsoException;
+import br.com.pedidos.domain.exception.EntidadeNaoEncontradaException;
 import br.com.pedidos.domain.service.ClienteService;
 import br.com.pedidos.model.Cliente;
 
@@ -32,10 +36,10 @@ public class ClientesController {
 		return clienteService.listarClientes();
 	}
 	
-	@GetMapping("/{clienteId}")
-	public ResponseEntity<Cliente> buscar(@PathVariable("clienteId") Long id) {
+	@GetMapping("/{cliente_id}")
+	public ResponseEntity<Cliente> buscar(@PathVariable("cliente_id") Long cliente_id) {
 		try {
-			Cliente cliente = clienteService.buscarCliente(id);
+			Cliente cliente = clienteService.buscarCliente(cliente_id);
 			return ResponseEntity.ok(cliente);
 		}catch (EmptyResultDataAccessException e) {
 			// TODO: handle exception
@@ -45,19 +49,39 @@ public class ClientesController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void adicionar(@RequestBody Cliente cliente) {
-		clienteService.salvar(cliente);
+	public Cliente adicionar(@RequestBody Cliente cliente) {
+		return clienteService.salvar(cliente);
 	}
 	
-	@PutMapping("/clienteId}")
-	public ResponseEntity<Cliente> atualizar(@PathVariable("clienteId") Long id,
+	@PutMapping("/{cliente_id}")
+	public ResponseEntity<Cliente> atualizar(@PathVariable("cliente_id") Long cliente_id,
 			                                 @RequestBody Cliente cliente) {
-		return null;
+		try {
+			Cliente clienteAtual = clienteService.buscarCliente(cliente_id);
+			BeanUtils.copyProperties(cliente, clienteAtual, "id");
+			clienteAtual = clienteService.salvar(clienteAtual);
+			return ResponseEntity.ok(clienteAtual);
+			
+		}catch(EmptyResultDataAccessException e) {
+			return ResponseEntity.notFound().build();
+		}catch (DataIntegrityViolationException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
 	}
 	
-	@DeleteMapping("/clienteId")
-	public ResponseEntity<Cliente> remover(@PathVariable Long clienteId){
-		return null;
+	@DeleteMapping("/{cliente_id}")
+	public ResponseEntity<?> remover(@PathVariable("cliente_id") Long cliente_id){
+		try {
+			clienteService.remover(cliente_id);
+			return ResponseEntity.noContent().build();
+			
+		}catch(EntidadeNaoEncontradaException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		} catch (EntidadeEmUsoException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
+	
 	}
 	
 }
