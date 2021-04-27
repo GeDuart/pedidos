@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Data;
 @Entity
@@ -19,14 +20,14 @@ public class PedidoItens {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	@OneToMany
 	@JoinColumn(name = "pedido_id", nullable = false)
 	private Pedido pedido;
 	
 	@Column(nullable = false)
 	private Double quantidade;
 	
-	@ManyToOne
+	@OneToMany
 	@JoinColumn(name = "produto_id", nullable = false)
 	private Produto produto;
 	

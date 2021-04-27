@@ -1,12 +1,15 @@
 package br.com.pedidos.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -40,5 +43,8 @@ public class Cliente {
 	@JsonIgnore
 	@Column(nullable = false)
 	private Date data_att;
+	
+	@OneToMany(mappedBy = "cliente")
+	private List<Telefone> telefones = new ArrayList<>();
 
 }
