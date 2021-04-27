@@ -9,8 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -32,12 +34,14 @@ public class Pedido {
 	private BigDecimal valor_total;
 
 	@JsonIgnore
-	@Column(nullable = false)
+	@CreationTimestamp
+	@Column(nullable = false,columnDefinition = "datetime")
 	private Date data_criacao;
 	
 	
 	@JsonIgnore
-	@Column(nullable = false)
-	private Date data_att;
+	@UpdateTimestamp
+	@Column(nullable = false,columnDefinition = "datetime")
+	private Date data_atualizacao;
 	
 }

@@ -9,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -31,11 +34,13 @@ public class Produto {
 	private Integer status;
 	
 	@JsonIgnore
-	@Column(nullable = false)
+	@CreationTimestamp
+	@Column(nullable = false,columnDefinition = "datetime")
 	private Date data_criacao;
 	
 	@JsonIgnore
-	@Column(nullable = false)
-	private Date data_att;
+	@UpdateTimestamp
+	@Column(nullable = false,columnDefinition = "datetime")
+	private Date data_atualizacao;
 
 }

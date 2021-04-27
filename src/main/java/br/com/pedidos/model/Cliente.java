@@ -5,11 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,9 +31,9 @@ public class Cliente {
 	@Column(nullable = false)
 	private String nome;
 	
-	private String cep;
-	private String endereco;
-	
+	@Embedded
+	private Endereco endereco;
+		
 	@Column(nullable = false)
 	private String email_principal;
 	
@@ -37,12 +41,14 @@ public class Cliente {
 	private Integer status;
 	
 	@JsonIgnore
-	@Column(nullable = false)
+	@CreationTimestamp
+	@Column(nullable = false,columnDefinition = "datetime")
 	private Date data_criacao;
 	
 	@JsonIgnore
-	@Column(nullable = false)
-	private Date data_att;
+	@UpdateTimestamp
+	@Column(nullable = false,columnDefinition = "datetime")
+	private Date data_atualizacao;
 	
 	@OneToMany(mappedBy = "cliente")
 	private List<Telefone> telefones = new ArrayList<>();
