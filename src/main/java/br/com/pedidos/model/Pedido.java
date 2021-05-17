@@ -30,6 +30,10 @@ public class Pedido {
 	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
 	
+	@OneToMany
+	@JoinColumn(name = "empresa_id", nullable = false)
+	private Empresa empresa;
+	
 	@Column(nullable = false)
 	private BigDecimal valor_total;
 
@@ -37,7 +41,6 @@ public class Pedido {
 	@CreationTimestamp
 	@Column(nullable = false,columnDefinition = "datetime")
 	private Date data_criacao;
-	
 	
 	@JsonIgnore
 	@UpdateTimestamp

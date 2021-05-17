@@ -28,7 +28,7 @@ public class Produto {
 	private String nome;
 	
 	@Column(nullable = false)
-	private BigDecimal valor;
+	private BigDecimal valor_unitario;
 	
 	@Column(nullable = false)
 	private Integer status;
