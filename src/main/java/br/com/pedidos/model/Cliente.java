@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -51,10 +52,10 @@ public class Cliente {
 	@Column(nullable = false,columnDefinition = "datetime")
 	private Date data_atualizacao;
 	
-	@OneToMany(mappedBy = "telefone")
+	@OneToMany
 	private List<Telefone> telefones = new ArrayList<>();
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name = "empresa_id", nullable = false)
 	private Empresa empresa;
 

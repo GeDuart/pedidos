@@ -20,14 +20,14 @@ public class PedidoItens {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name = "pedido_id", nullable = false)
 	private Pedido pedido;
 	
 	@Column(nullable = false)
 	private Double quantidade;
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name = "produto_id", nullable = false)
 	private Produto produto;
 	

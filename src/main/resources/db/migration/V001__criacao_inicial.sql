@@ -81,7 +81,3 @@ create table pedidoItens(
   
   primary key (id)
 )engine=InnoDB default charset=utf8;
-
-
-
-alter table cidade add constraint fk_cidade_estado foreing key (estado_id) references estado (id);

@@ -5,7 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
 
@@ -20,8 +21,8 @@ public class Cidade {
 	@Column(nullable = false)
 	private String nome;
 	
-	@Column(nullable = false)
-	@OneToMany(mappedBy = "estado")
+	@ManyToOne
+	@JoinColumn(name = "estado_id", nullable = false)
 	private Estado estado;
 	
 }
